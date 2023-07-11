@@ -1,10 +1,21 @@
 import React from "react";
 import styles from "./ExpenseForm.module.css";
 
-export default function ExpenseForm (){
-  return(
+export default function ExpenseForm(props) {
+  const { expenseAmount, setExpenseAmount, expenseText, setExpenseText, data, setData } = props;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // Clear the input fields after form submission
+    setData([{expenseAmount,expenseText},...data]);
+    setExpenseAmount('');
+    setExpenseText('');
+  }
+
+
+  return (
     <>
-          <form className={styles.form} >
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h3>Add new transaction</h3>
         <label htmlFor="expenseText">Text</label>
         <input
@@ -12,8 +23,11 @@ export default function ExpenseForm (){
           className={styles.input}
           type="text"
           placeholder="Enter text..."
+          value={expenseText}
           required
-
+          onChange={(e) => {
+            setExpenseText(e.target.value);
+          }}
         />
         <div>
           <label htmlFor="expenseAmount">Amount</label>
@@ -24,14 +38,17 @@ export default function ExpenseForm (){
           id="expenseAmount"
           type="number"
           placeholder="Enter amount..."
+          value={expenseAmount}
           required
+          onChange={(e) => {
+            setExpenseAmount(e.target.value);
+          }}
+
         />
-        <button className={styles.submitBtn}>Add Transaction</button>
+        <button className={styles.submitBtn} type="submit">
+          Add Transaction
+        </button>
       </form>
-    
-
     </>
-  )
+  );
 }
-
-

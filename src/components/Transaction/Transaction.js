@@ -1,90 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Transaction.module.css";
 import EditImage from "../../images/edit.png";
 import DeleteImage from "../../images/trash-bin.png";
 
-// export default class Transaction extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       currentHoverIndex: null
-//     };
-//   }
-//   render() {
-//     return (
-//       <li
-//         key={this.props.expense.id}
-//         className={`${styles.transaction} ${
-//           this.props.expense.amount > 0 ? styles.profit : styles.loss
-//         }`}
-//         onMouseOver={() => {
-//           this.setState({ currentHoverIndex: this.props.index });
-//         }}
-//         onMouseLeave={() => {
-//           this.setState({ currentHoverIndex: null });
-//         }}
-//       >
-//         <div>{this.props.expense.text}</div>
-//         <div className={styles.transactionOptions}>
-//           <div
-//             className={`${styles.amount} ${
-//               this.state.currentHoverIndex === this.props.index &&
-//               styles.movePrice
-//             }`}
-//           >
-//             ${this.props.expense.amount}
-//           </div>
-//           <div
-//             className={`${styles.btnContainer} ${
-//               this.state.currentHoverIndex === this.props.index && styles.active
-//             }`}
-//           >
-//             <div className={styles.edit} onClick={() => {}}>
-//               <img src={EditImage} height="100%" alt="Edit" />
-//             </div>
-//             <div className={styles.delete} onClick={() => {}}>
-//               <img src={DeleteImage} height="100%" alt="Delete" />
-//             </div>
-//           </div>
-//         </div>
-//       </li>
-//     );
-//   }
-// }
+export default function Transaction(props) {
+  const [currentHoverIndex, setCurrentHoverIndex] = useState(null);
 
-export default function Transaction (){
+  const { expense, index , removeTransaction} = props;
+
   return (
     <li
-      key={this.props.expense.id}
+      key={index}
       className={`${styles.transaction} ${
-        this.props.expense.amount > 0 ? styles.profit : styles.loss
+        expense.expenseAmount > 0 ? styles.profit : styles.loss
       }`}
       onMouseOver={() => {
-        this.setState({ currentHoverIndex: this.props.index });
+        setCurrentHoverIndex(index);
       }}
       onMouseLeave={() => {
-        this.setState({ currentHoverIndex: null });
+        setCurrentHoverIndex(null);
       }}
     >
-      <div>{this.props.expense.text}</div>
+      <div>{expense.expenseText}</div>
       <div className={styles.transactionOptions}>
         <div
           className={`${styles.amount} ${
-            this.state.currentHoverIndex === this.props.index &&
-            styles.movePrice
+            currentHoverIndex === index && styles.movePrice
           }`}
         >
-          ${this.props.expense.amount}
+          ${expense.expenseAmount}
         </div>
         <div
           className={`${styles.btnContainer} ${
-            this.state.currentHoverIndex === this.props.index && styles.active
+            currentHoverIndex === index && styles.active
           }`}
         >
           <div className={styles.edit} onClick={() => {}}>
             <img src={EditImage} height="100%" alt="Edit" />
           </div>
-          <div className={styles.delete} onClick={() => {}}>
+          <div className={styles.delete} onClick={() => {removeTransaction(index)}}>
             <img src={DeleteImage} height="100%" alt="Delete" />
           </div>
         </div>
